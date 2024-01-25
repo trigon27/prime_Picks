@@ -2,7 +2,7 @@ const express = require("express");
 const server = express();
 const mongoose = require("mongoose");
 require("dotenv").config();
-
+const compression = require("compression");
 const { createProduct } = require("./controller/Product");
 const productsRouter = require("./routes/Products");
 const brandsRouter = require("./routes/Brand");
@@ -67,6 +67,7 @@ opts.jwtFromRequest = cookieExtractor;
 opts.secretOrKey = process.env.JWT_SECRET_KEY; // TODO: should not be in code;
 
 // Middleware
+server.use(compression());
 server.use(express.static(path.resolve(__dirname, "build")));
 server.use(
   session({
